@@ -1,10 +1,11 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useContext } from "react";
+import "./App.css";
+import reactLogo from "./assets/react.svg";
+import CounterContext from "./contexts/CounterContext";
+import viteLogo from "/vite.svg";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { state, dispatch } = useContext(CounterContext);
 
   return (
     <>
@@ -18,8 +19,22 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+        <p>count is {state?.count ?? "context state is not provided"}</p>
+        <button
+          onClick={() => {
+            console.log(state, dispatch);
+            dispatch?.({ type: "decrement" });
+          }}
+        >
+          Decrement
+        </button>
+        <button
+          onClick={() => {
+            console.log(state, dispatch);
+            dispatch?.({ type: "increment" });
+          }}
+        >
+          Increment
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
@@ -29,7 +44,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
